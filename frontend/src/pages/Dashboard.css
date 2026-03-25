@@ -1,0 +1,152 @@
+/* =============================================
+   Dashboard page styles
+   ============================================= */
+
+/* ---- Header ---- */
+.dashboard-header {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-bg) 100%);
+    padding: var(--space-12) 0 var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.brand-icon {
+    font-size: 2rem;
+}
+
+.brand-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 30%, var(--color-accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+    margin-left: 3rem;
+}
+
+/* ---- Main ---- */
+.dashboard-main {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+/* ---- Stats grid ---- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-4);
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+    padding: var(--space-6) var(--space-4);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-primary-light);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ---- Welcome card ---- */
+.welcome-card h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-3);
+}
+
+.welcome-card p {
+    color: var(--color-text-muted);
+    max-width: 640px;
+    line-height: 1.7;
+}
+
+.welcome-actions {
+    margin-top: var(--space-6);
+}
+
+/* ---- Steps grid ---- */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+}
+
+.step-card {
+    position: relative;
+    padding-top: var(--space-8);
+}
+
+.step-number {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    border-radius: 50%;
+}
+
+.step-card h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+}
+
+.step-card p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+    .brand-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .brand-subtitle {
+        margin-left: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
