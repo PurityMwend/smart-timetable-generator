@@ -1,0 +1,87 @@
+# Backend - Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Django specific
+backend/__pycache__/
+backend/*/__pycache__/
+backend/*/migrations/
+backend/db.sqlite3
+backend/static/
+backend/media/
+backend/staticfiles/
+*.log
+local_settings.py
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Frontend - React
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Database
+*.sql
+*.sqlite
+*.sqlite3
+*.myd
+*.myi
+*.frm
+*.ibd
+*.ib_logfile*
+
+# IDE - VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+media/
+static/
+uploads/
+*.pdf
+!docs/**/*.pdf
+*.xlsx
+!sample_data/*.xlsx
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+.secrets
+credentials.json
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.coverage.*
+*.cover
+.hypothesis/
