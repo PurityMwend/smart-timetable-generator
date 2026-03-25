@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Dashboard.css'
 
 const stats = [
@@ -43,23 +44,23 @@ function Dashboard() {
                         run the scheduler, and fine-tune the result with drag-and-drop.
                     </p>
                     <div className="welcome-actions">
-                        <button className="btn btn-primary" id="btn-get-started">
-                            Get Started
-                        </button>
+                        <Link to="/data" className="btn btn-primary">Manage Data</Link>
+                        <Link to="/generate" className="btn btn-secondary">Generate Timetable</Link>
                     </div>
                 </section>
 
                 {/* Quick-start steps */}
                 <section className="steps-grid" id="steps-section">
                     {[
-                        { step: 1, title: 'Upload Data', desc: 'Import courses, lecturers, rooms & time-slots from Excel templates.' },
-                        { step: 2, title: 'Generate', desc: 'Run the constraint-satisfaction algorithm to create a conflict-free draft.' },
-                        { step: 3, title: 'Adjust & Publish', desc: 'Drag-and-drop to fine-tune, then publish the final timetable.' },
+                        { step: 1, title: 'Upload Data', desc: 'Import courses, lecturers, rooms & time-slots from Excel templates.', link: '/data' },
+                        { step: 2, title: 'Generate', desc: 'Run the constraint-satisfaction algorithm to create a conflict-free draft.', link: '/generate' },
+                        { step: 3, title: 'Adjust & Publish', desc: 'Drag-and-drop to fine-tune, then publish the final timetable.', link: '/view' },
                     ].map((item) => (
                         <div className="card step-card" key={item.step}>
                             <span className="step-number">{item.step}</span>
                             <h3>{item.title}</h3>
                             <p>{item.desc}</p>
+                            <Link to={item.link} className="btn btn-primary">Go</Link>
                         </div>
                     ))}
                 </section>
