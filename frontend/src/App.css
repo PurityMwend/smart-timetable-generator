@@ -8,8 +8,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f8f9fa;
+    color: #E8E8E8;
+    background-color: #0D1B2A;
 }
 
 .container {
@@ -19,11 +19,12 @@ body {
 }
 
 .card {
-    background: white;
+    background: #1A2A3A;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     padding: 1.5rem;
     margin-bottom: 1rem;
+    border: 1px solid #2A3F5F;
 }
 
 .btn {
@@ -38,19 +39,19 @@ body {
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #1E90FF;
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #1570D0;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #FF6F20;
     color: white;
 }
 
 .btn-secondary:hover {
-    background-color: #545b62;
+    background-color: #E55D0F;
 }

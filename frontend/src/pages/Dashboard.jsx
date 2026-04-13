@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Dashboard.css'
 
 const stats = [
@@ -9,6 +10,8 @@ const stats = [
 ]
 
 function Dashboard() {
+    const { isTimetabler, isLecturer, isStudent } = useAuth();
+
     return (
         <div className="dashboard">
             {/* ---- Header ---- */}
@@ -18,7 +21,7 @@ function Dashboard() {
                         <span className="brand-icon">⏱️</span>
                         <h1 className="brand-title">Smart Timetable Generator</h1>
                     </div>
-                    <p className="brand-subtitle">University Lecture Scheduling System</p>
+                    <p className="brand-subtitle">AI-Powered University Lecture Scheduling System</p>
                 </div>
             </header>
 
@@ -35,35 +38,60 @@ function Dashboard() {
                     ))}
                 </section>
 
-                {/* Welcome card */}
-                <section className="card welcome-card" id="welcome-section">
-                    <h2>Welcome 👋</h2>
-                    <p>
-                        This system automatically generates conflict-free weekly lecture
-                        schedules for your university. Upload your data via Excel templates,
-                        run the scheduler, and fine-tune the result with drag-and-drop.
-                    </p>
-                    <div className="welcome-actions">
-                        <Link to="/data" className="btn btn-primary">Manage Data</Link>
-                        <Link to="/generate" className="btn btn-secondary">Generate Timetable</Link>
-                    </div>
-                </section>
-
-                {/* Quick-start steps */}
-                <section className="steps-grid" id="steps-section">
-                    {[
-                        { step: 1, title: 'Upload Data', desc: 'Import courses, lecturers, rooms & time-slots from Excel templates.', link: '/data' },
-                        { step: 2, title: 'Generate', desc: 'Run the constraint-satisfaction algorithm to create a conflict-free draft.', link: '/generate' },
-                        { step: 3, title: 'Adjust & Publish', desc: 'Drag-and-drop to fine-tune, then publish the final timetable.', link: '/view' },
-                    ].map((item) => (
-                        <div className="card step-card" key={item.step}>
-                            <span className="step-number">{item.step}</span>
-                            <h3>{item.title}</h3>
-                            <p>{item.desc}</p>
-                            <Link to={item.link} className="btn btn-primary">Go</Link>
+                {/* Welcome card - Role-based content */}
+                {isStudent ? (
+                    <section className="card welcome-card" id="welcome-section">
+                        <h2>Your Timetable & Course Information 📚</h2>
+                        <p>
+                            View your assigned courses, timetable, class locations, and important academic information.
+                            All the essential details you need for your studies in one place.
+                        </p>
+                        <div className="welcome-actions">
+                            <Link to="/view" className="btn btn-primary">View My Timetable</Link>
+                            <Link to="/student-info" className="btn btn-secondary">Course Information</Link>
                         </div>
-                    ))}
-                </section>
+                    </section>
+                ) : (
+                    <section className="card welcome-card" id="welcome-section">
+                        <h2>Welcome to AI-Powered Scheduling 👋</h2>
+                        <p>
+                            This intelligent system uses advanced AI algorithms to generate optimal, conflict-free weekly lecture
+                            schedules for your university. Upload your constraints via PDF/Excel files,
+                            let the AI learn from pre-trained models and your data, then generate efficient timetables automatically.
+                        </p>
+                        <div className="welcome-actions">
+                            {(isTimetabler || isLecturer) && (
+                                <Link to="/data" className="btn btn-primary">Data Manager</Link>
+                            )}
+                            {isTimetabler && (
+                                <>
+                                    <Link to="/training-data" className="btn btn-secondary">Training Data</Link>
+                                    <Link to="/generate" className="btn btn-secondary">Generate Timetable</Link>
+                                </>
+                            )}
+                            <Link to="/view" className="btn btn-secondary">View Timetable</Link>
+                        </div>
+                    </section>
+                )}
+
+                {/* Quick-start steps - Only for admins and lecturers */}
+                {!isStudent && (
+                    <section className="steps-grid" id="steps-section">
+                        {[
+                            { step: 1, title: 'Manage Data', desc: 'Upload and manage courses, lecturers, rooms, and time slots.', link: '/data' },
+                            { step: 2, title: 'Generate', desc: 'Run the AI algorithm to create an optimized conflict-free timetable.', link: '/generate' },
+                            { step: 3, title: 'Publish', desc: 'Review, adjust, and publish the final timetable for students.', link: '/view' },
+                        ].map((item) => (
+                            <div className="card step-card" key={item.step}>
+                                <span className="step-number">{item.step}</span>
+                                <h3>{item.title}</h3>
+                                <p>{item.desc}</p>
+                                <Link to={item.link} className="btn btn-primary">Go</Link>
+                            </div>
+                        ))}
+                    </section>
+                )}
+
             </main>
         </div>
     )

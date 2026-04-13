@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import (
     User,
+    School,
     Department,
     Course,
     Lecturer,
@@ -33,10 +34,22 @@ class UserAdmin(BaseUserAdmin):
 # Domain model admins
 # ---------------------------------------------------------------------------
 
+@admin.register(School)
+class SchoolAdmin(admin.ModelAdmin):
+    list_display = ('code', 'name', 'departments_count')
+    search_fields = ('name', 'code')
+    
+    def departments_count(self, obj):
+        return obj.departments.count()
+    departments_count.short_description = 'Departments'
+
+
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('code', 'name')
+    list_display = ('code', 'name', 'school')
+    list_filter = ('school',)
     search_fields = ('name', 'code')
+    raw_id_fields = ('school',)
 
 
 @admin.register(Course)

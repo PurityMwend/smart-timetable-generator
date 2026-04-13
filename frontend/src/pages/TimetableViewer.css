@@ -11,38 +11,42 @@
     display: grid;
     grid-template-columns: 150px repeat(5, 1fr);
     gap: 1px;
-    background-color: #ddd;
-    border: 1px solid #ddd;
+    background-color: #2A3F5F;
+    border: 1px solid #2A3F5F;
 }
 
 .day-column,
 .time-column {
-    background-color: white;
+    background-color: #1A2A3A;
+    color: #E8E8E8;
 }
 
 .header-cell {
-    background-color: #f8f9fa;
+    background-color: #0D1B2A;
     padding: 1rem;
     font-weight: bold;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #2A3F5F;
+    color: #E8E8E8;
 }
 
 .time-cell {
     padding: 1rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
+    background-color: #0D1B2A;
+    border-bottom: 1px solid #2A3F5F;
     text-align: center;
+    color: #E8E8E8;
 }
 
 .entry-cell {
     padding: 0.5rem;
     min-height: 80px;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
+    background-color: #1A2A3A;
+    border-bottom: 1px solid #2A3F5F;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #E8E8E8;
 }
 
 .entry {
@@ -51,7 +55,7 @@
 }
 
 .empty {
-    color: #6c757d;
+    color: #808080;
     font-style: italic;
 }
 
@@ -72,8 +76,8 @@
 }
 
 .tab-button.active {
-    border-bottom-color: #007bff;
-    color: #007bff;
+    border-bottom-color: #1E90FF;
+    color: #1E90FF;
 }
 
 .tab-content {

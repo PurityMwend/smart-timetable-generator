@@ -1,0 +1,430 @@
+.student-info {
+    padding: 2rem 0;
+    min-height: calc(100vh - 100px);
+}
+
+.error-message {
+    background-color: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 2rem;
+    color: #333;
+    text-align: center;
+}
+
+.error-message h2 {
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+}
+
+.spinner {
+    font-size: 1.2rem;
+    color: #666;
+    padding: 2rem;
+}
+
+.info-header {
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #1f4788 0%, #2a5bb0 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    color: white;
+}
+
+.info-header h1 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.info-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+    overflow-x: auto;
+    background: white;
+    padding: 0 1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-button {
+    padding: 1rem 1.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    border-bottom: 3px solid transparent;
+    color: #666;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.tab-button:hover {
+    color: #1f4788;
+    background: rgba(31, 71, 136, 0.05);
+}
+
+.tab-button.active {
+    color: white;
+    background: linear-gradient(135deg, #1f4788 0%, #2a5bb0 100%);
+    border-bottom-color: transparent;
+}
+
+.tab-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-height: 300px;
+}
+
+.vital-info {
+    width: 100%;
+}
+
+.vital-info h2 {
+    color: #1f4788;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #1f4788;
+    padding-bottom: 1rem;
+}
+
+/* Schools List Styles */
+.schools-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.school-card {
+    background: linear-gradient(135deg, #f5f9ff 0%, #fff 100%);
+    border: 2px solid #1f4788;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(31, 71, 136, 0.1);
+    transition: all 0.3s ease;
+}
+
+.school-card:hover {
+    box-shadow: 0 6px 20px rgba(31, 71, 136, 0.2);
+    transform: translateY(-4px);
+    border-color: #2a5bb0;
+}
+
+.school-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 1rem;
+}
+
+.school-name {
+    color: #1f4788;
+    margin: 0;
+    font-size: 1.3rem;
+    flex: 1;
+}
+
+.school-code {
+    background: #1f4788;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.school-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 1rem 0;
+    font-style: italic;
+}
+
+.departments-list {
+    margin-top: 1.5rem;
+}
+
+.departments-list h4 {
+    color: #1f4788;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.departments-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.department-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.department-item:last-child {
+    border-bottom: none;
+}
+
+.dept-code {
+    background: #e8f1ff;
+    color: #1f4788;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.dept-name {
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.no-departments {
+    color: #999;
+    font-style: italic;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+/* Timetable Actions */
+.timetable-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.timetable-header h2 {
+    color: #1f4788;
+    margin: 0;
+    font-size: 1.5rem;
+    border-bottom: none;
+    padding-bottom: 0;
+    flex: 1;
+}
+
+.timetable-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.course-code,
+.room-name,
+.dept-code {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #1f4788;
+}
+
+.course-name,
+.room-building,
+.dept-name {
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.course-meta,
+.room-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #eee;
+}
+
+.course-meta span,
+.room-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Timetable View */
+.timetable-view {
+    overflow-x: auto;
+}
+
+.timetable-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.timetable-table thead {
+    background: #f5f5f5;
+}
+
+.timetable-table th {
+    padding: 1rem;
+    text-align: left;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 2px solid #1f4788;
+}
+
+.timetable-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.timetable-table tbody tr:hover {
+    background: #f0f0f0;
+}
+
+.timetable-table strong {
+    color: #1f4788;
+}
+
+.timetable-table small {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.empty-message {
+    text-align: center;
+    color: #666;
+    padding: 3rem 2rem;
+    font-style: italic;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border: 2px dashed #ddd;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1f4788 0%, #2a5bb0 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(31, 71, 136, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #e8f1ff;
+    color: #1f4788;
+    border: 2px solid #1f4788;
+}
+
+.btn-secondary:hover {
+    background: #1f4788;
+    color: white;
+}
+
+/* Response */
+@media (max-width: 768px) {
+    .student-info {
+        padding: 1rem 0;
+    }
+
+    .schools-container {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        gap: 0.5rem;
+    }
+
+    .tab-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .tab-content {
+        padding: 1rem;
+    }
+
+    .timetable-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timetable-header h2 {
+        width: 100%;
+    }
+
+    .timetable-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .timetable-table {
+        font-size: 0.9rem;
+    }
+
+    .timetable-table th,
+    .timetable-table td {
+        padding: 0.5rem;
+    }
+}
