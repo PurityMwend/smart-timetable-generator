@@ -1,22 +1,56 @@
 .file-upload {
     margin-bottom: 2rem;
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #2A3F5F;
     border-radius: 4px;
+    background: #1A2A3A;
+    color: #E8E8E8;
 }
 
 .file-upload h3 {
     margin-bottom: 1rem;
 }
 
+.template-download {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: #0D1B2A;
+    border-radius: 4px;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #1E90FF;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+}
+
+.link-button:hover {
+    color: #1570D0;
+}
+
 .file-upload input {
     margin-right: 1rem;
+    margin-bottom: 1rem;
+    background-color: #1A2A3A;
+    border: 1px solid #2A3F5F;
+    color: #E8E8E8;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.file-upload input::placeholder {
+    color: #808080;
 }
 
 .message {
     margin-top: 1rem;
     padding: 0.5rem;
     border-radius: 4px;
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #1A3A2A;
+    color: #52B97A;
+    border: 1px solid #2E8B57;
 }
