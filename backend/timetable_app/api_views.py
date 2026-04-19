@@ -8,7 +8,7 @@ for data import, timetable generation, and export.
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from datetime import datetime
 import io
@@ -207,6 +207,8 @@ def login_user(request):
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
+        # Create session cookie for subsequent authenticated requests
+        login(request, user)
         return Response(
             {
                 'message': 'Login successful',
