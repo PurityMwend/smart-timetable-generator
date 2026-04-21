@@ -36,5 +36,6 @@
         "**/*.pyc": true,
         "**/node_modules": true,
         "**/.git": true
-    }
+    },
+    "sqltools.useNodeRuntime": true
 }
