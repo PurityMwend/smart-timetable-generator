@@ -1,0 +1,14 @@
+Django==4.2
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+django-filter==23.5
+python-decouple==3.8
+openpyxl==3.1.2
+pdfplumber==0.10.3
+reportlab==4.0.9
+ortools==9.7.2996
+pandas==2.2.2
+numpy==1.26.4
+Pillow==10.0.0
+scikit-learn==1.4.2
+joblib==1.4.0
