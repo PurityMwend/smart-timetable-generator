@@ -1,0 +1,276 @@
+/* ================================================================
+   TimetableViewer.css — modern browser view
+   ================================================================ */
+
+.timetable-viewer.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* Header */
+.viewer-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.header-icon {
+    font-size: 2.8rem;
+    flex-shrink: 0;
+}
+
+.viewer-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+    color: #1a1a2e;
+}
+
+.viewer-header .subtitle {
+    color: #5f6368;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Controls */
+.viewer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.timetable-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.timetable-selector label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #3c4043;
+}
+
+.timetable-selector select {
+    padding: 0.5rem 2.5rem 0.5rem 0.8rem;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: #1a1a2e;
+    background-color: #fff;
+    cursor: pointer;
+    min-width: 280px;
+}
+
+.timetable-selector select:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.viewer-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.viewer-actions .btn {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.88rem;
+}
+
+/* Content */
+.viewer-content {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    min-height: 400px;
+}
+
+.timetable-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.badge {
+    background: #e8f0fe;
+    color: #1a73e8;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.meta {
+    color: #5f6368;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Grid */
+.viewer-grid-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+}
+
+.viewer-grid {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    font-size: 0.85rem;
+}
+
+.viewer-grid th {
+    background: #f8f9fa;
+    color: #3c4043;
+    padding: 0.75rem;
+    font-weight: 700;
+    border-bottom: 2px solid #e8eaed;
+    text-align: center;
+}
+
+.viewer-grid th.corner {
+    background: #fff;
+    z-index: 10;
+    position: sticky;
+    left: 0;
+}
+
+.time-label {
+    background: #f8f9fa;
+    color: #1a73e8;
+    font-weight: 700;
+    padding: 1rem;
+    text-align: center;
+    white-space: nowrap;
+    border-right: 1px solid #e8eaed;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+}
+
+.empty-cell {
+    background: #fff;
+    border: 1px solid #f1f3f4;
+    height: 100px;
+}
+
+.entry-cell {
+    padding: 6px;
+    border: 1px solid #e8eaed;
+    height: 100px;
+    vertical-align: top;
+}
+
+.entry-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f6ff 100%);
+    border: 1px solid #d2e3fc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s;
+}
+
+.entry-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.course-code {
+    font-weight: 800;
+    color: #1967d2;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+}
+
+.course-name {
+    font-size: 0.75rem;
+    color: #3c4043;
+    line-height: 1.3;
+    font-weight: 500;
+    flex: 1;
+    overflow: hidden;
+}
+
+.entry-footer {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    font-size: 0.68rem;
+    color: #70757a;
+    border-top: 1px solid #f1f3f4;
+    padding-top: 4px;
+}
+
+/* Utils */
+.viewer-loading,
+.viewer-loading-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem 0;
+    font-size: 1.1rem;
+    color: #1a73e8;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(26, 115, 232, 0.2);
+    border-top-color: #1a73e8;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.viewer-error {
+    background: #fce8e6;
+    color: #c5221f;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.viewer-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.viewer-empty p {
+    color: #5f6368;
+    margin-bottom: 1.5rem;
+}

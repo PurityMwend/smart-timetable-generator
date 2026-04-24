@@ -1,0 +1,351 @@
+/* ================================================================
+   TimetableGenerator.css — modern AI generator page
+   ================================================================ */
+
+.timetable-generator.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* Header */
+.gen-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.gen-header-icon {
+    font-size: 2.8rem;
+    flex-shrink: 0;
+}
+
+.gen-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    color: var(--text-primary, #1a1a2e);
+}
+
+.gen-header .subtitle {
+    color: var(--text-secondary, #5f6368);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Hint */
+.gen-hint {
+    background: #e8f0fe;
+    border-left: 4px solid #1a73e8;
+    border-radius: 0 8px 8px 0;
+    padding: 0.65rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #1a73e8;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* Card */
+.gen-card {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    min-height: 280px;
+}
+
+/* Idle — steps */
+.gen-idle {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.gen-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .gen-steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gen-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #e8eaed;
+    transition: box-shadow 0.2s;
+}
+
+.gen-step:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.step-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.gen-step strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+    margin-bottom: 0.2rem;
+}
+
+.gen-step p {
+    font-size: 0.83rem;
+    color: #70757a;
+    margin: 0;
+}
+
+.gen-btn {
+    align-self: center;
+    padding: 0.9rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    letter-spacing: 0.01em;
+}
+
+/* Loading */
+.gen-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.gen-spinner {
+    width: 56px;
+    height: 56px;
+    border: 5px solid rgba(26, 115, 232, 0.15);
+    border-top-color: #1a73e8;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.gen-loading h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #1a73e8;
+}
+
+.gen-loading p {
+    color: #70757a;
+    margin: 0;
+}
+
+/* Error */
+.gen-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: #fce8e6;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #f5c6c6;
+}
+
+.error-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.gen-error strong {
+    display: block;
+    color: #c5221f;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.gen-error p {
+    color: #5f6368;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.gen-retry {
+    margin-left: auto;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+/* Done */
+.gen-done {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.gen-success-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: #f0faf4;
+    border: 1px solid #34a85340;
+    border-radius: 10px;
+    padding: 0.85rem 1.2rem;
+    font-weight: 600;
+    color: #1e7d46;
+    font-size: 0.95rem;
+}
+
+.export-actions {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.export-btn {
+    padding: 0.45rem 1rem;
+    font-size: 0.88rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.regen-btn {
+    padding: 0.45rem 1rem;
+    font-size: 0.88rem;
+    border-radius: 8px;
+}
+
+/* Timetable grid */
+.timetable-grid-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e8eaed;
+}
+
+.timetable-grid {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+    font-size: 0.82rem;
+}
+
+.timetable-grid th {
+    background: #1a73e8;
+    color: #fff;
+    padding: 0.65rem 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.corner-cell {
+    background: #0d47a1 !important;
+}
+
+.time-cell {
+    background: #e8f0fe;
+    color: #1a73e8;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.6rem 0.75rem;
+    white-space: nowrap;
+    font-size: 0.8rem;
+    border-right: 2px solid #c5d8f8;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.empty-cell {
+    min-height: 70px;
+    height: 70px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #f1f3f4;
+}
+
+.entry-cell {
+    padding: 4px;
+    border: 1px solid #e8eaed;
+    vertical-align: top;
+    min-height: 70px;
+    height: 70px;
+}
+
+.entry-block {
+    background: linear-gradient(135deg, #e8f0fe 0%, #c5d8f8 100%);
+    border: 1px solid #a8c4f5;
+    border-radius: 6px;
+    padding: 5px 7px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 62px;
+    overflow: hidden;
+}
+
+.entry-code {
+    font-weight: 700;
+    color: #1565c0;
+    font-size: 0.8rem;
+}
+
+.entry-name {
+    color: #1a1a2e;
+    font-size: 0.72rem;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.entry-meta {
+    color: #5f6368;
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.no-entries {
+    color: #70757a;
+    text-align: center;
+    padding: 2rem;
+}
+
+.timetable-grid tbody tr:nth-child(even) td:not(.time-cell) {
+    background: #fafbff;
+}

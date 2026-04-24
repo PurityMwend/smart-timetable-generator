@@ -1,0 +1,436 @@
+/* ───── Layout ───────────────────────────────────── */
+.data-manager {
+    display: flex;
+    height: calc(100vh - 64px);
+    gap: 1px;
+    background: #1a1a2e;
+    overflow: hidden;
+}
+
+/* ───── Hierarchy columns ────────────────────────── */
+.hcol {
+    display: flex;
+    flex-direction: column;
+    width: 22%;
+    min-width: 200px;
+    background: #16213e;
+    border-right: 1px solid #0f3460;
+    transition: opacity 0.2s;
+    overflow: hidden;
+}
+
+.hcol-dimmed {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+/* Units column takes remaining space and is split vertically */
+.hcol-units {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #16213e;
+    overflow: hidden;
+}
+
+.hcol-top {
+    flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #0f3460;
+    overflow: hidden;
+}
+
+.hcol-bottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ───── Column header ───────────────────────────── */
+.hcol-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #0f3460;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+.hcol-header.sub {
+    background: #0b2545;
+    font-size: 0.8rem;
+}
+
+.hcol-count {
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.hcol-add-btn {
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.hcol-add-btn:hover {
+    background: #c73652;
+}
+
+/* ───── Empty state ─────────────────────────────── */
+.hcol-empty {
+    color: #64748b;
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 24px 12px;
+    font-style: italic;
+}
+
+/* ───── List ─────────────────────────────────────── */
+.hcol-list {
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.hcol-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.hcol-list::-webkit-scrollbar-thumb {
+    background: #0f3460;
+    border-radius: 4px;
+}
+
+/* ───── List item ────────────────────────────────── */
+.hcol-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 10px;
+    margin-bottom: 3px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    border: 1px solid transparent;
+    background: #1a1a2e;
+}
+
+.hcol-item:hover {
+    background: #0f3460;
+    border-color: #e94560;
+}
+
+.hcol-item.selected {
+    background: #e94560;
+    border-color: #c73652;
+}
+
+.hcol-item.selected .hcol-code {
+    color: #fff;
+}
+
+.hcol-item.selected .hcol-name {
+    color: #fff;
+}
+
+.hcol-item.selected .hcol-meta {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hcol-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.hcol-code {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #e94560;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hcol-name {
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hcol-meta {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+/* ───── Item action buttons ──────────────────────── */
+.hcol-item-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.hcol-item:hover .hcol-item-actions {
+    opacity: 1;
+}
+
+.hcol-edit-btn,
+.hcol-del-btn,
+.hcol-unlink-btn,
+.hcol-link-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    line-height: 1;
+    transition: background 0.12s;
+}
+
+.hcol-edit-btn:hover {
+    background: rgba(233, 69, 96, 0.2);
+}
+
+.hcol-del-btn:hover {
+    background: rgba(233, 69, 96, 0.35);
+}
+
+.hcol-unlink-btn {
+    color: #e94560;
+    font-size: 1rem;
+}
+
+.hcol-unlink-btn:hover {
+    background: rgba(233, 69, 96, 0.2);
+}
+
+.hcol-link-btn {
+    color: #10b981;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.hcol-link-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.hcol-link-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ───── Unit item variations ─────────────────────── */
+.linked-unit {
+    border-left: 3px solid #10b981;
+}
+
+.catalogue-unit {
+    opacity: 0.9;
+}
+
+.catalogue-unit.is-linked {
+    opacity: 0.6;
+}
+
+.catalogue-unit.is-linked .hcol-name {
+    text-decoration: line-through;
+}
+
+.linked-badge {
+    font-size: 0.65rem;
+    color: #10b981;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+}
+
+.catalogue-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ───── Upload strip at bottom ───────────────────── */
+.dm-upload-strip {
+    position: fixed;
+    bottom: 0;
+    left: 240px;
+    right: 0;
+    z-index: 10;
+    background: #0f3460;
+    border-top: 1px solid #e94560;
+    padding: 8px 16px;
+}
+
+/* ───── Modal ────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #16213e;
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 520px;
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: #0f3460;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #e2e8f0;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.modal-close:hover {
+    color: #e94560;
+}
+
+.modal-form {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-field label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    background: #1a1a2e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    color: #e2e8f0;
+    padding: 9px 12px;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: #e94560;
+}
+
+.form-field input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 6px;
+}
+
+.btn {
+    padding: 9px 22px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-primary {
+    background: #e94560;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #c73652;
+}
+
+.btn-secondary {
+    background: #0f3460;
+    color: #94a3b8;
+}
+
+.btn-secondary:hover {
+    color: #e2e8f0;
+}
+
+.error-message {
+    margin: 0 24px;
+    padding: 10px 14px;
+    background: rgba(233, 69, 96, 0.15);
+    border: 1px solid #e94560;
+    border-radius: 8px;
+    color: #e94560;
+    font-size: 0.825rem;
+}
