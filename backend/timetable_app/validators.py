@@ -16,35 +16,28 @@ def get_user_role_from_email(email):
     Determine user role based on email domain.
     
     Returns:
-        str: Role ('TIMETABLER', 'LECTURER', 'STUDENT') or None if invalid domain
+        str: Role ('ADMIN') or None if invalid domain
     """
     from .models import User
     
     email_lower = email.lower().strip()
     
     if email_lower.endswith('@admin.cuk.ac.ke'):
-        return User.Role.TIMETABLER
-    elif email_lower.endswith('@staff.cuk.ac.ke'):
-        return User.Role.LECTURER
-    elif email_lower.endswith('@student.cuk.ac.ke'):
-        return User.Role.STUDENT
+        return User.Role.ADMIN
     else:
         return None
 
 
 def validate_cuk_email(email):
     """
-    Validate that email is from an allowed CUK domain.
-    Allowed domains:
-    - @admin.cuk.ac.ke (Timetabler)
-    - @staff.cuk.ac.ke (Lecturer)
-    - @student.cuk.ac.ke (Student)
+    Validate that email is from allowed admin domain.
+    Allowed domain:
+    - @admin.cuk.ac.ke (Admin)
     """
     role = get_user_role_from_email(email)
     if role is None:
         raise ValidationError(
-            "Email must be from one of the following domains: "
-            "@admin.cuk.ac.ke, @staff.cuk.ac.ke, or @student.cuk.ac.ke"
+            "Email must be from the admin domain: @admin.cuk.ac.ke"
         )
     return role
 

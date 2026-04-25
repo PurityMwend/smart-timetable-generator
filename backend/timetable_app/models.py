@@ -22,27 +22,21 @@ from django.db import models
 
 class User(AbstractUser):
     """
-    Custom user with role-based access:
-    - TIMETABLER: Superuser privileges, can manage all aspects
-    - LECTURER: Can view timetables, manage own schedule (no editing timetables)
-    - STUDENT: Read-only access
+    Custom user with admin-only access:
+    - ADMIN: Superuser privileges, can manage all aspects
     
-    Roles are assigned automatically based on email domain:
-    - @admin.cuk.ac.ke → TIMETABLER (superuser)
-    - @staff.cuk.ac.ke → LECTURER (limited privileges)
-    - @student.cuk.ac.ke → STUDENT (read-only)
+    Only admin email domain is allowed:
+    - @admin.cuk.ac.ke → ADMIN (superuser)
     """
 
     class Role(models.TextChoices):
-        TIMETABLER = 'TIMETABLER', 'Timetabler (Admin)'
-        LECTURER = 'LECTURER', 'Lecturer'
-        STUDENT = 'STUDENT', 'Student'
+        ADMIN = 'ADMIN', 'Admin'
 
     role = models.CharField(
         max_length=15,
         choices=Role.choices,
-        default=Role.STUDENT,
-        help_text='Determines access level based on email domain.',
+        default=Role.ADMIN,
+        help_text='Only Admin role is supported.',
     )
 
     class Meta:
@@ -52,24 +46,14 @@ class User(AbstractUser):
         return f'{self.get_full_name() or self.username} ({self.get_role_display()})'
 
     @property
-    def is_timetabler(self):
-        """Check if user is a timetabler (superuser)."""
-        return self.role == self.Role.TIMETABLER
-
-    @property
-    def is_lecturer(self):
-        """Check if user is a lecturer."""
-        return self.role == self.Role.LECTURER
-
-    @property
-    def is_student(self):
-        """Check if user is a student."""
-        return self.role == self.Role.STUDENT
+    def is_admin(self):
+        """Check if user is an admin."""
+        return self.role == self.Role.ADMIN
 
     @property
     def is_admin_user(self):
-        """Backward compatibility: admin users are timetablers with superuser."""
-        return self.is_timetabler and self.is_superuser
+        """Backward compatibility: admin users are admins with superuser."""
+        return self.is_admin and self.is_superuser
 
 
 # ---------------------------------------------------------------------------

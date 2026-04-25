@@ -1,4 +1,4 @@
-Django==6.0.4
+Django==4.2.30
 djangorestframework==3.17.1
 django-cors-headers==4.9.0
 mysqlclient==2.2.8
@@ -12,3 +12,5 @@ numpy==2.3.5
 xlrd==2.0.2
 xlsxwriter==3.2.9
 drf-yasg==1.21.10
+ortools>=9.8
+pdfplumber==0.11.0

@@ -36,33 +36,25 @@ from .validators import (
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for User model without exposing password."""
     role_display = serializers.CharField(source='get_role_display', read_only=True)
-    is_timetabler = serializers.SerializerMethodField()
-    is_lecturer = serializers.SerializerMethodField()
-    is_student = serializers.SerializerMethodField()
+    is_admin = serializers.SerializerMethodField()
     
     class Meta:
         model = User
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name', 
             'role', 'role_display', 'is_active', 'date_joined',
-            'is_timetabler', 'is_lecturer', 'is_student'
+            'is_admin'
         ]
         read_only_fields = ['id', 'date_joined']
     
-    def get_is_timetabler(self, obj):
-        return obj.is_timetabler
-    
-    def get_is_lecturer(self, obj):
-        return obj.is_lecturer
-    
-    def get_is_student(self, obj):
-        return obj.is_student
+    def get_is_admin(self, obj):
+        return obj.is_admin
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     """
-    Serializer for user registration.
-    Email domain determines the role automatically.
+    Serializer for admin user registration.
+    Only admin email domain is allowed.
     """
     password = serializers.CharField(write_only=True, min_length=8)
     password_confirm = serializers.CharField(write_only=True, min_length=8)
@@ -75,7 +67,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
     
     def validate_email(self, value):
-        """Validate email is from allowed CUK domain."""
+        """Validate email is from allowed admin domain."""
         try:
             validate_cuk_email(value)
             validate_email_not_registered(value)
@@ -98,7 +90,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
     
     def create(self, validated_data):
-        """Create user with role determined by email domain."""
+        """Create admin user."""
         email = validated_data['email']
         role = get_user_role_from_email(email)
         
@@ -112,8 +104,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             is_active=True
         )
         
-        # Set timetablers as superusers
-        if role == User.Role.TIMETABLER:
+        # Set admin as superuser
+        if role == User.Role.ADMIN:
             user.is_staff = True
             user.is_superuser = True
             user.save()

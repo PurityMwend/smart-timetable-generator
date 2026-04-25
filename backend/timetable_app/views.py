@@ -1,5 +1,6 @@
 """
 DRF viewsets for CRUD on all timetable models.
+NOTE: This file is deprecated. Use api_views.py for all API endpoints.
 """
 
 from ortools.sat.python import cp_model
@@ -42,16 +43,13 @@ import io
 from datetime import datetime
 
 
-class IsAdminUserOrReadOnly(permissions.BasePermission):
-    """Allow full access to ADMIN users; read-only for VIEWER users."""
+class IsAdminUser(permissions.BasePermission):
+    """Allow access only to admin users."""
 
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
         return (
             request.user.is_authenticated
-            and hasattr(request.user, 'is_admin_user')
-            and request.user.is_admin_user
+            and request.user.is_admin
         )
 
 
@@ -62,7 +60,7 @@ class IsAdminUserOrReadOnly(permissions.BasePermission):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_user(request):
-    """Register a new user (creates VIEWER role by default)."""
+    """Register a new admin user."""
     try:
         username = request.data.get('username')
         password = request.data.get('password')
@@ -88,8 +86,12 @@ def register_user(request):
             email=email,
             first_name=first_name,
             last_name=last_name,
-            role=User.Role.VIEWER,  # Default role is VIEWER
+            role=User.Role.ADMIN,
         )
+        
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
         
         serializer = UserSerializer(user)
         return Response(
@@ -190,14 +192,14 @@ def logout_user(request):
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     search_fields = ['name', 'code']
 
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.select_related('department').all()
     serializer_class = CourseSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['department', 'year_of_study', 'study_mode']
     search_fields = ['name', 'code']
 
@@ -205,7 +207,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 class LecturerViewSet(viewsets.ModelViewSet):
     queryset = Lecturer.objects.select_related('department').all()
     serializer_class = LecturerSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['department']
     search_fields = ['name', 'employee_id']
 
@@ -213,7 +215,7 @@ class LecturerViewSet(viewsets.ModelViewSet):
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['room_type', 'building']
     search_fields = ['name', 'building']
 
@@ -221,7 +223,7 @@ class RoomViewSet(viewsets.ModelViewSet):
 class TimeSlotViewSet(viewsets.ModelViewSet):
     queryset = TimeSlot.objects.all()
     serializer_class = TimeSlotSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['day']
 
 
@@ -230,7 +232,7 @@ class LecturerAvailabilityViewSet(viewsets.ModelViewSet):
         'lecturer', 'time_slot'
     ).all()
     serializer_class = LecturerAvailabilitySerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['lecturer', 'is_available']
 
 
@@ -239,12 +241,12 @@ class TimetableEntryViewSet(viewsets.ModelViewSet):
         'course', 'lecturer', 'room', 'time_slot'
     ).all()
     serializer_class = TimetableEntrySerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['time_slot__day', 'is_locked', 'course', 'lecturer', 'room']
 
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsAdminUserOrReadOnly])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def upload_data(request):
     """Upload and parse Excel or PDF file to create/update data."""
     if 'file' not in request.FILES:
@@ -491,7 +493,7 @@ def parse_pdf(file):
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def download_excel_template(request):
     """Generate and return a sample Excel template for data upload."""
     try:
@@ -573,34 +575,7 @@ def download_excel_template(request):
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def course_timetable(request, course_id):
-    """Get timetable entries for a specific course."""
-    entries = TimetableEntry.objects.filter(course_id=course_id).select_related('time_slot', 'room', 'lecturer')
-    serializer = TimetableEntrySerializer(entries, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def lecturer_timetable(request, lecturer_id):
-    """Get timetable entries for a specific lecturer."""
-    entries = TimetableEntry.objects.filter(lecturer_id=lecturer_id).select_related('time_slot', 'room', 'course')
-    serializer = TimetableEntrySerializer(entries, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def room_timetable(request, room_id):
-    """Get timetable entries for a specific room."""
-    entries = TimetableEntry.objects.filter(room_id=room_id).select_related('time_slot', 'course', 'lecturer')
-    serializer = TimetableEntrySerializer(entries, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def export_timetable_pdf(request):
     """Export timetable as PDF with optional filtering by lecturer/room/course."""
     try:
@@ -708,7 +683,7 @@ def export_timetable_pdf(request):
 
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsAdminUserOrReadOnly])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def generate_timetable(request):
     """Generate timetable using AI/ML optimization with constraint programming."""
     try:
@@ -802,3 +777,4 @@ def generate_timetable(request):
             
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

@@ -39,117 +39,14 @@ from .services import TimetableScheduler, FileParser
 # Custom Permissions
 # ============================================================================
 
-class IsTimetablerUser(permissions.BasePermission):
-    """Allow access only to timetabler (admin) users."""
+class IsAdminUser(permissions.BasePermission):
+    """Allow access only to admin users."""
     
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated
-            and request.user.is_timetabler
+            and request.user.is_admin
         )
-
-
-class IsLecturerUser(permissions.BasePermission):
-    """Allow access to lecturer and timetabler users."""
-    
-    def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and (request.user.is_lecturer or request.user.is_timetabler)
-        )
-
-
-class IsTimetablerOrReadOnly(permissions.BasePermission):
-    """
-    Allow full CRUD for timetablers; read-only for lecturers and students.
-    """
-    
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return request.user.is_authenticated
-        return (
-            request.user.is_authenticated
-            and request.user.is_timetabler
-        )
-
-
-class CanEditTimetable(permissions.BasePermission):
-    """
-    Allow timetablers to create/edit timetables.
-    Lecturers and students are read-only.
-    """
-    
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return request.user.is_authenticated
-        return (
-            request.user.is_authenticated
-            and request.user.is_timetabler
-        )
-
-
-class IsAdminUserOrReadOnly(permissions.BasePermission):
-    """
-    Backward compatibility: Allow full CRUD for timetablers;
-    read-only for other users.
-    """
-    
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return request.user.is_authenticated
-        return (
-            request.user.is_authenticated
-            and request.user.is_timetabler
-        )
-
-
-class IsStudentUser(permissions.BasePermission):
-    """Allow access only to student users."""
-    
-    def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and request.user.is_student
-        )
-
-
-class CanAccessTrainingData(permissions.BasePermission):
-    """
-    Allow access to training data only to timetablers (admins).
-    """
-    
-    def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and request.user.is_timetabler
-        )
-
-
-class CanManageLecturerData(permissions.BasePermission):
-    """
-    Allow lecturers to manage only relevant data:
-    - View and upload courses they teach
-    - Manage rooms and time slots
-    - Cannot access training data
-    """
-    
-    def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and (request.user.is_lecturer or request.user.is_timetabler)
-        )
-
-
-class IsStudentReadOnly(permissions.BasePermission):
-    """
-    Allow students read-only access to timetables.
-    Students cannot view training data.
-    """
-    
-    def has_permission(self, request, view):
-        if request.method not in permissions.SAFE_METHODS:
-            return False
-        return request.user.is_authenticated
 
 
 # ============================================================================
@@ -285,39 +182,21 @@ def update_user_profile(request):
 class SchoolViewSet(viewsets.ModelViewSet):
     queryset = School.objects.prefetch_related('departments').all()
     serializer_class = SchoolSerializer
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     search_fields = ['name', 'code']
-    
-    def get_permissions(self):
-        """
-        Custom permission:
-        - GET (list/retrieve): Allow all authenticated users
-        - POST/PUT/DELETE: Allow only timetablers
-        """
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.IsAuthenticated()]
-        return [permissions.IsAuthenticated(), IsTimetablerUser()]
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     search_fields = ['name', 'code']
-    
-    def get_permissions(self):
-        """
-        Custom permission:
-        - GET (list/retrieve): Allow all authenticated users
-        - POST/PUT/DELETE: Allow only timetablers
-        """
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.IsAuthenticated()]
-        return [permissions.IsAuthenticated(), IsTimetablerUser()]
 
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.select_related('department').all()
     serializer_class = CourseSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['department', 'year_of_study', 'study_mode']
     search_fields = ['name', 'code']
 
@@ -325,7 +204,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 class LecturerViewSet(viewsets.ModelViewSet):
     queryset = Lecturer.objects.select_related('department').all()
     serializer_class = LecturerSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['department']
     search_fields = ['name', 'employee_id']
 
@@ -333,7 +212,7 @@ class LecturerViewSet(viewsets.ModelViewSet):
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['room_type', 'building']
     search_fields = ['name', 'building']
 
@@ -341,7 +220,7 @@ class RoomViewSet(viewsets.ModelViewSet):
 class TimeSlotViewSet(viewsets.ModelViewSet):
     queryset = TimeSlot.objects.all()
     serializer_class = TimeSlotSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['day']
 
 
@@ -350,7 +229,7 @@ class LecturerAvailabilityViewSet(viewsets.ModelViewSet):
         'lecturer', 'time_slot'
     ).all()
     serializer_class = LecturerAvailabilitySerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['lecturer', 'is_available']
 
 
@@ -359,7 +238,7 @@ class TimetableEntryViewSet(viewsets.ModelViewSet):
         'course', 'lecturer', 'room', 'time_slot'
     ).all()
     serializer_class = TimetableEntrySerializer
-    permission_classes = [permissions.IsAuthenticated, IsTimetablerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filterset_fields = ['time_slot__day', 'is_locked', 'course', 'lecturer', 'room']
 
 
@@ -368,7 +247,7 @@ class TimetableEntryViewSet(viewsets.ModelViewSet):
 # ============================================================================
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsAdminUserOrReadOnly])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def upload_data(request):
     """Upload Excel or PDF file to import timetable data."""
     if 'file' not in request.FILES:
@@ -467,7 +346,7 @@ def download_excel_template(request):
 # ============================================================================
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsAdminUserOrReadOnly])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def generate_timetable(request):
     """Generate optimized timetable from existing data."""
     try:
@@ -509,7 +388,7 @@ def generate_timetable(request):
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def export_timetable_pdf(request):
     """Export timetable as PDF (optionally filtered)."""
     try:
@@ -625,44 +504,11 @@ def export_timetable_pdf(request):
 
 
 # ============================================================================
-# Filtered Timetable Views
-# ============================================================================
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def course_timetable(request, course_id):
-    """Get timetable for specific course."""
-    entries = TimetableEntry.objects.filter(
-        course_id=course_id
-    ).select_related('time_slot', 'room', 'lecturer')
-    return Response(TimetableEntrySerializer(entries, many=True).data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def lecturer_timetable(request, lecturer_id):
-    """Get timetable for specific lecturer."""
-    entries = TimetableEntry.objects.filter(
-        lecturer_id=lecturer_id
-    ).select_related('time_slot', 'room', 'course')
-    return Response(TimetableEntrySerializer(entries, many=True).data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def room_timetable(request, room_id):
-    """Get timetable for specific room."""
-    entries = TimetableEntry.objects.filter(
-        room_id=room_id
-    ).select_related('time_slot', 'course', 'lecturer')
-    return Response(TimetableEntrySerializer(entries, many=True).data)
-
-# ============================================================================
 # Training Data Endpoints
 # ============================================================================
 
 @api_view(['GET', 'POST'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def training_data_list(request):
     """
     List all training datasets (admin only).
@@ -683,7 +529,7 @@ def training_data_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def training_data_detail(request, pk):
     """
     Get, update, or delete a specific training dataset (admin only).
@@ -716,7 +562,7 @@ def training_data_detail(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def common_units_list(request):
     """
     List all common units or create a new one (admin only).
@@ -736,7 +582,7 @@ def common_units_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def common_unit_detail(request, pk):
     """Get, update, or delete a specific common unit (admin only)."""
     try:
@@ -767,7 +613,7 @@ def common_unit_detail(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def recurrent_units_list(request):
     """
     List all recurrent units or create a new one (admin only).
@@ -787,7 +633,7 @@ def recurrent_units_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([CanAccessTrainingData])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def recurrent_unit_detail(request, pk):
     """Get, update, or delete a specific recurrent unit (admin only)."""
     try:
@@ -822,7 +668,7 @@ def recurrent_unit_detail(request, pk):
 # ============================================================================
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsTimetablerUser])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def upload_training_data(request):
     """
     Upload and parse training data files (Excel/CSV/PDF).
@@ -890,7 +736,7 @@ def upload_training_data(request):
 
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated, IsTimetablerUser])
+@permission_classes([permissions.IsAuthenticated, IsAdminUser])
 def upload_data_file(request):
     """
     General file upload endpoint for importing timetable data.

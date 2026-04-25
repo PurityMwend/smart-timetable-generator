@@ -38,11 +38,6 @@ urlpatterns = [
     path('generate/', api_views.generate_timetable, name='generate_timetable'),
     path('export-pdf/', api_views.export_timetable_pdf, name='export_timetable_pdf'),
     
-    # Filtered views
-    path('courses/<int:course_id>/timetable/', api_views.course_timetable, name='course_timetable'),
-    path('lecturers/<int:lecturer_id>/timetable/', api_views.lecturer_timetable, name='lecturer_timetable'),
-    path('rooms/<int:room_id>/timetable/', api_views.room_timetable, name='room_timetable'),
-    
     # Training Data (Admin only)
     path('training-data/', api_views.training_data_list, name='training_data_list'),
     path('training-data/<int:pk>/', api_views.training_data_detail, name='training_data_detail'),
