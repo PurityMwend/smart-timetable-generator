@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: timetable_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: timetable_db
+      MYSQL_USER: timetable_user
+      MYSQL_PASSWORD: timetable_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
